@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "DRP Shops Locater";    
+}
+@model BodyShopsApp.ViewModels.Home.IndexViewModel
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+@using (Html.BeginForm("GetBodyShop", "Home", FormMethod.Get, new { id = "frmShop" }))
+{
+    @Html.LabelFor(m => m.ProviderName)
+    @Html.TextBoxFor(m => m.ProviderName)
+    @Html.LabelFor(m => m.Range)    
+    @Html.DropDownListFor(m => m.Range, Model.RangeList, "Please select the range")
+    
+    @Html.HiddenFor(m => m.Latitude, new { id = "hfLatitude" })
+    @Html.HiddenFor(m => m.Longitude, new { id = "hfLongitude" })
+
+    <input type="submit" value="Go" id="btnGo" />
+    
+    @Html.ValidationSummary()
+}
+<div id="divMsg"></div>
+<div id="map" style="height: 600px; width: 69%; float: left;"></div>
+<div id="directions-panel" style="float: left; width: 29%; padding-left:0.5em;"></div>
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+    <script type="text/javascript" src="~/Scripts/ShopMapLocater.js"></script>
+}

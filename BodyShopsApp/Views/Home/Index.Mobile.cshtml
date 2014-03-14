@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.Mobile.cshtml";
+    ViewBag.Title = "DRP Shops Locater";    
+}
+@model BodyShopsApp.ViewModels.Home.IndexViewModel
+
+@section featured {
+
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+@using (Html.BeginForm("GetBodyShop", "Home", FormMethod.Get, new { id = "frmShop" }))
+{
+   
+    <div data-role="fieldcontain">
+
+        <label for="ProviderName">Provider name:</label>
+        <input type="text" name="ProviderName" id="ProviderName" placeholder="Enter Provider Name">
+
+        <label for="range">Range:</label>
+        <input type="range" name="range" id="range" value="50" min="0" max="100" data-highlight="true">
+    </div>
+    
+    @Html.HiddenFor(m => m.Latitude, new { id = "hfLatitude" })
+    @Html.HiddenFor(m => m.Longitude, new { id = "hfLongitude" })
+    @Html.ValidationSummary()
+            
+    <input type="button" value="Go" id="btnGo" data-inline="true" />
+  
+}
+
+<div id="divMsg"></div>
+<div id="map" class="page-map" style="height: 600px; width: 100%; float: left"></div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+    <script type="text/javascript" src="~/Scripts/ShopMapLocater.js"></script>
+}

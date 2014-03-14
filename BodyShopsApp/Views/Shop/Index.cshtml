@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@model BodyShopsApp.ViewModels.Shop.IndexViewModel
+<table class="grid-style">
+    <caption>
+        List of DRP Shops
+        <span style="float: right; padding-right: 3%"><span class="ui-icon ui-icon-plus" style="display: inline-block"></span>@Html.ActionLink("Add New Shop", "Add", "Shop")</span>
+    </caption>
+    <thead>
+        <tr>
+            <th style="text-align: center">#</th>
+            <th>Provider</th>
+            <th>Name</th>
+            <th style="white-space: nowrap">Address Line1</th>
+            <th style="white-space: nowrap">Address Line2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Country</th>
+            <th>Pin</th>
+            <th>Contact</th>
+            <th>Show Map</th>
+            <th colspan="2" style="text-align: center">Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Shops.Count; i++)
+        {
+            <tr>
+                <td style="text-align: center">@(i + 1)</td>
+                <td>@Model.Shops[i].ProviderName</td>
+                <td>@Model.Shops[i].Name</td>
+                <td>@Model.Shops[i].AddressLine1</td>
+                <td>@Model.Shops[i].AddressLine2</td>
+                <td>@Model.Shops[i].City</td>
+                <td>@Model.Shops[i].State</td>
+                <td>@Model.Shops[i].Country</td>
+                <td>@Model.Shops[i].Pin</td>
+                <td style="white-space: nowrap">@Model.Shops[i].Contact</td>
+                <td style="cursor:pointer; white-space:nowrap" data-geo-url="@string.Format("http://maps.google.com/maps/api/staticmap?zoom=17&size=300x300&maptype=satellite&sensor=false&center={0},{1}", Model.Shops[i].ShopGeoLocation.Latitude, Model.Shops[i].ShopGeoLocation.Longitude)">
+                    <span class="ui-icon ui-icon-image" style="display:inline-block"></span><span>Map</span>
+                </td>                
+                <td style="white-space: nowrap"><a href="@Url.Action("Edit", "Shop", new { id = Model.Shops[i].Id })"><span class="ui-icon ui-icon-pencil" style="display: inline-block"></span>Edit</a></td>
+                <td style="white-space: nowrap"><a onclick='return confirm("Are you sure, you want to remove this record?")' href="@Url.Action("Remove", "Shop", new { id = Model.Shops[i].Id })"><span class="ui-icon ui-icon-trash" style="display: inline-block"></span>Remove</a></td>
+            </tr>    
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="13">
+                <span style="float: right;">
+                    <span class="ui-icon ui-icon-plus" style="display: inline-block"></span>@Html.ActionLink("Add New Shop", "Add", "Shop")
+                </span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+@section scripts{
+    <style type="text/css">
+        .map {
+            width: 305px;
+            height: 305px;
+            border: 5px solid gray;
+            border-radius: 10px;
+        }
+
+        .ui-tooltip {
+            max-width: 305px;
+        }
+    </style>
+
+    <script type="text/javascript">
+          $(function() {
+            $(document).tooltip({
+              items: "[data-geo-url]",
+              track: true,
+              position: {
+                my: "left top",
+                at: "left bottom"
+                },
+              content: function() {
+                var element = $(this);
+                if(element.is("[data-geo-url]") ) {                  
+                  return "<img class='map' alt='map' src='"+ element.attr('data-geo-url') +"'>";
+                }
+              },show: {
+                 effect: "slideDown",
+                delay: 500
+              }        
+            });
+          });
+    </script>
+}

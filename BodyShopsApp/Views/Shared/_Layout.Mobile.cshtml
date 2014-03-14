@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/Mobile/css", "~/Content/jquerymobile/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div data-role="page" data-theme="c">
+
+        <div data-role="content">
+            <img src="~/Images/infogain.png" />
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        </div>
+        <div data-role="footer">
+            <div data-role="navbar" id="navigation" data-position="fixed" data-fullscreen="true">
+                <ul>
+                    <li><a href="#pagethree" data-icon="home" data-rel="dialog" data-transition="turn">Full Screen</a></li>
+                    <li><a href="#pagetwo" data-icon="search" data-rel="dialog" data-transition="turn" id="directions" class="ui-btn-active ui-state-persist">Get Directions</a></li>
+                </ul>
+            </div>
+            <div>
+                <p>&copy; @DateTime.Now.Year - Infogain India Pvt. Ltd.</p>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="pagetwo" data-theme="d">
+        <div data-role="header">
+            <h1>Directions</h1>
+        </div>
+        <div data-role="content">
+            <div id="directions-panel" style="height: 100%; max-width: none"></div>
+        </div>
+    </div>
+
+    <div data-role="page" id="pagethree" data-theme="d">
+        <div data-role="header">
+            <h1>Map</h1>
+        </div>
+        <div data-role="content" style="padding: 1em">
+            <div id="map_canvas" style="height: 800px; max-width: none"></div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

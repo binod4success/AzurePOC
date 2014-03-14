@@ -1,0 +1,67 @@
+﻿@model BodyShopsApp.ViewModels.Shop.ShopEditViewModel
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+
+@using (Html.BeginForm("SaveShopData", "Shop", FormMethod.Post))
+{    
+    @Html.HiddenFor(m => m.Shop.Id)
+    @Html.LabelFor(m => m.Shop.Name)
+    @Html.TextBoxFor(m => m.Shop.Name)
+    @Html.LabelFor(m => m.Shop.ProviderId)
+    @Html.DropDownListFor(m => m.Shop.ProviderId, Model.ProviderList, "Please select the provider name")    
+    
+    <fieldset style="padding: 1em; border: 0.1em outset white">
+        <legend style="display: block">Address</legend>
+        <ol class="form-controls">
+            <li>
+                @Html.LabelFor(m => m.Shop.AddressLine1)
+                @Html.TextBoxFor(m => m.Shop.AddressLine1)
+                @Html.LabelFor(m => m.Shop.AddressLine2)
+                @Html.TextBoxFor(m => m.Shop.AddressLine2)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Shop.City)
+                @Html.TextBoxFor(m => m.Shop.City)
+                @Html.LabelFor(m => m.Shop.Pin)
+                @Html.TextBoxFor(m => m.Shop.Pin)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Shop.State)
+                @Html.TextBoxFor(m => m.Shop.State)
+                @Html.LabelFor(m => m.Shop.Country)
+                @Html.TextBoxFor(m => m.Shop.Country)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Shop.Contact)
+                @Html.TextBoxFor(m => m.Shop.Contact)
+            </li>
+            <li>
+                @Html.LabelFor(m => m.Shop.ShopGeoLocation.Latitude)
+                @Html.TextBoxFor(m => m.Shop.ShopGeoLocation.Latitude, new { id = "txtLatitude" })
+
+                @Html.LabelFor(m => m.Shop.ShopGeoLocation.Longitude)
+                @Html.TextBoxFor(m => m.Shop.ShopGeoLocation.Longitude, new { id = "txtLongitude" })
+            </li>
+        </ol>
+    </fieldset>
+    <input type="submit" value="Save" /> <input type="reset" value="Reset" id="btnReset" />
+    @Html.ValidationSummary()
+    <span>@TempData["StatusMessage"]</span>
+}
+<div id="map" style="height: 500px; width: 100%"></div>
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true&libraries=places"></script>
+    <script src="~/Scripts/EditShopDetails.js"></script>
+}
